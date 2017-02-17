@@ -3,136 +3,134 @@ import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 import edu.princeton.cs.algs4.StdOut;
 
 public class Percolation {
-    private int[] Open_node;
-    private double Threshold;
-    private int N;
-    private static int open_site;
-    private WeightedQuickUnionUF UF;
+    private static int openSite = 0;
+    private int[] openNode;
+    private double threshold;
+    private int numOfGrid;
+    private WeightedQuickUnionUF union;
 
     public Percolation(int n)               // create n-by-n grid, with all sites blocked
     {
-        open_site = 0;
-        if(n <= 0)
+        if (n <= 0)
         {
             throw new java.lang.IllegalArgumentException("n less than 1");
         }
-        N = n;
-        Open_node = new int[N * N + 2];
-        for(int i = 1; i <= N * N; i++)
+        numOfGrid = n;
+        openNode = new int[numOfGrid * numOfGrid + 2];
+        for (int i = 1; i <= numOfGrid * numOfGrid; i++)
         {
-            Open_node[i] = 0;                  // all blocked
+            openNode[i] = 0;                  // all blocked
         }
-        Open_node[0] = 1;
-        Open_node[N * N + 1] = 1;
-        UF = new WeightedQuickUnionUF(N * N + 2);  // including top root and bottom root
+        openNode[0] = 1;
+        openNode[numOfGrid * numOfGrid + 1] = 1;
+        union = new WeightedQuickUnionUF(numOfGrid * numOfGrid + 2);  // including top root and bottom root
     }
    public void open(int i, int j)          // open site (row i, column j) if it is not open already
    {
-       if((i < 1) || (i > N ) || (j < 1) || (j > N))
+       if (i < 1 || i > numOfGrid || j < 1 || j > numOfGrid)
        {
            String exce = "i: " + i + " j: " + j + " out of boundary\n";
            throw new IndexOutOfBoundsException(exce);
        }
-       if(isOpen(i, j) == false)
+       if (!isOpen(i, j))
        {
-           Open_node[(i - 1) * N + j] = 1;
-           if(i == 1)
+           openNode[(i - 1) * numOfGrid + j] = 1;
+           if (i == 1)
            {
-               UF.union(0, j);
+               union.union(0, j);
            }
-           else if(i == N)
+           else if (i == numOfGrid)
            {
-               UF.union(N * N + 1, (i - 1) * N + j);
+               union.union(numOfGrid * numOfGrid + 1, (i - 1) * numOfGrid + j);
            }
-           if((i > 1) && isOpen(i - 1, j))
+           if ((i > 1) && isOpen(i - 1, j))
            {
-               UF.union((i - 1) * N + j, (i - 2) * N + j);
+               union.union((i - 1) * numOfGrid + j, (i - 2) * numOfGrid + j);
            }
-           if((i < N) && isOpen(i + 1, j))
+           if ((i < numOfGrid) && isOpen(i + 1, j))
            {
-               UF.union((i - 1) * N + j, i * N + j);
+               union.union((i - 1) * numOfGrid + j, i * numOfGrid + j);
            }
-           if((j > 1) && isOpen(i, j - 1))
+           if ((j > 1) && isOpen(i, j - 1))
            {
-               UF.union((i - 1) * N + j, (i - 1) * N + j - 1);
+               union.union((i - 1) * numOfGrid + j, (i - 1) * numOfGrid + j - 1);
            }
-           if((j < N) && isOpen(i, j + 1))
+           if ((j < numOfGrid) && isOpen(i, j + 1))
            {
-               UF.union((i - 1) * N + j, (i - 1) * N + j + 1);
+               union.union((i - 1) * numOfGrid + j, (i - 1) * numOfGrid + j + 1);
            }
            
        }
    }
    public boolean isOpen(int i, int j)     // is site (row i, column j) open?
    {
-       if((i < 1) || (i > N ) || (j < 1) || (j > N))
+       if (i < 1 || i > numOfGrid || j < 1 || j > numOfGrid)
        {
            String exce = "i: " + i + " j: " + j + " out of boundary\n";
            throw new IndexOutOfBoundsException(exce);
        }
-       else if(Open_node[(i - 1) * N + j] == 1)
+       if (openNode[(i - 1) * numOfGrid + j] == 1)
        {
            return true;
        }
-       else{
-           return false;
-       }
+       return false;
    }
    public boolean isFull(int i, int j)     // is site (row i, column j) full?
    {
-       if((i < 1) || (i > N ) || (j < 1) || (j > N))
+       if (i < 1 || i > numOfGrid || j < 1 || j > numOfGrid)
        {
            String exce = "i: " + i + " j: " + j + " out of boundary\n";
            throw new IndexOutOfBoundsException(exce);
        }
-       return UF.connected(0, (i - 1) * N + j);   // use 0 to represent top root       
+       return union.connected(0, (i - 1) * numOfGrid + j);   // use 0 to represent top root       
    }
 
    public int numberOfOpenSites()
    {
-       return open_site;    
+       return openSite;    
    }
    
    public boolean percolates()             // does the system percolate?
    {
-       return UF.connected(0, N * N + 1);     
+       return union.connected(0, numOfGrid * numOfGrid + 1);     
    } 
    public static void main(String[] args)  // test client (optional)
    {
-       Percolation P = new Percolation(100);
+       Percolation playground = new Percolation(100);
        
-       int random_N;   
-       int[] exist_Site = new int[P.N * P.N + 1];
+       int randomNumOfGrid;   
+       int[] existSite = new int[playground.numOfGrid * playground.numOfGrid + 1];
        int i, j;
-       while(P.percolates() == false)
+       while (!playground.percolates())
        {
-           if(open_site > P.N * P.N){break;}
-           do{
-               random_N = StdRandom.uniform(0, P.N * P.N);
-           }while(random_N == 0);
-           boolean IsExist = false;
-           for(int array_Index = 1; array_Index <= open_site;   array_Index++)
+           if (openSite > playground.numOfGrid * playground.numOfGrid) { break; }
+           do {
+               randomNumOfGrid = StdRandom.uniform(0, playground.numOfGrid * 
+                                                    playground.numOfGrid);
+           } while (randomNumOfGrid == 0);
+           boolean isExist = false;
+           for (int arrayIndex = 1; arrayIndex <= openSite;   arrayIndex++)
            {
-               if(random_N == exist_Site[array_Index])
+               if (randomNumOfGrid == existSite[arrayIndex])
                {
-                   IsExist = true;
+                   isExist = true;
                }
            }
-           if(!IsExist){
-               open_site++;
-               exist_Site[open_site] = random_N;
+           if (!isExist) {
+               openSite++;
+               existSite[openSite] = randomNumOfGrid;
            }
-           if(random_N % P.N == 0){
-               i = random_N / P.N;
-               j = P.N;
+           if (randomNumOfGrid % playground.numOfGrid == 0) {
+               i = randomNumOfGrid / playground.numOfGrid;
+               j = playground.numOfGrid;
            }
-           else{
-               i = random_N / P.N + 1;
-               j = random_N % P.N;
+           else {
+               i = randomNumOfGrid / playground.numOfGrid + 1;
+               j = randomNumOfGrid % playground.numOfGrid;
            }    
-           P.open(i, j);
+           playground.open(i, j);
        }
-       P.Threshold = open_site / (double)(P.N * P.N);
-       StdOut.printf("\n%f\n", P.Threshold);
+       playground.threshold = openSite / (double) (playground.numOfGrid * playground.numOfGrid);
+       StdOut.printf("\n%f\n", playground.threshold);
    }
 }

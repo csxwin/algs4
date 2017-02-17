@@ -2,78 +2,77 @@ import edu.princeton.cs.algs4.StdRandom;
 import edu.princeton.cs.algs4.StdStats;
 import edu.princeton.cs.algs4.StdOut;
 
-public class PercolationStats{
-    private int T;
-    private int N;
-    private double[] X;
+public class PercolationStats {
+    private int loops;
+    private int numOfGrid;
+    private double[] arrayOfPercolation;
     public PercolationStats(int n, int trials)
     {
-        if((n <= 0) || (trials <= 0))
+        if ((n <= 0) || (trials <= 0))
         {
             throw new java.lang.IllegalArgumentException("n and trails have to be larger than zero");
         }
-        T = trials;
-        N = n;
-        X = new double[T];
-        for(int loop = 0; loop < T; loop++)
+        loops = trials;
+        numOfGrid = n;
+        arrayOfPercolation = new double[loops];
+        for (int loop = 0; loop < loops; loop++)
         {
-            Percolation P = new Percolation(N);
-            int open_site = 1;
-            int random_N;    
-            int[] exist_Site = new int[N * N + 1];
+            Percolation playground = new Percolation(numOfGrid);
+            int openSite = 1;
+            int randomNumOfGrid;    
+            int[] existSite = new int[numOfGrid * numOfGrid + 1];
             int i, j;
-            while(P.percolates() == false)
+            while (!playground.percolates())
             {
-                if(open_site > N * N){break;}
-                do{
-                    random_N = StdRandom.uniform(0, N * N);
-                }while(random_N == 0);
-                boolean IsExist = false;
-                for(int array_Index = 1; array_Index <= open_site;   array_Index++)
+                if (openSite > numOfGrid * numOfGrid) { break; }
+                do {
+                    randomNumOfGrid = StdRandom.uniform(0, numOfGrid * numOfGrid);
+                } while (randomNumOfGrid == 0);
+                boolean isExist = false;
+                for (int arrayIndex = 1; arrayIndex <= openSite;   arrayIndex++)
                 {
-                    if(random_N == exist_Site[array_Index])
+                    if (randomNumOfGrid == existSite[arrayIndex])
                     {
-                        IsExist = true;
+                        isExist = true;
                     }
                 }
-                if(!IsExist){
-                    open_site++;
-                    exist_Site[open_site] = random_N;
+                if (!isExist) {
+                    openSite++;
+                    existSite[openSite] = randomNumOfGrid;
                 }
-                if(random_N % N == 0){
-                    i = random_N / N;
-                    j = N;
+                if (randomNumOfGrid % numOfGrid == 0) {
+                    i = randomNumOfGrid / numOfGrid;
+                    j = numOfGrid;
                 }
-                else{
-                    i = random_N / N + 1;
-                    j = random_N % N;
+                else {
+                    i = randomNumOfGrid / numOfGrid + 1;
+                    j = randomNumOfGrid % numOfGrid;
                 }      
-                P.open(i, j);
+                playground.open(i, j);
             }
-            X[loop] = open_site / (double)(N * N);  
+            arrayOfPercolation[loop] = openSite / (double) (numOfGrid * numOfGrid);  
         }
     }
     public double mean()                          // sample mean of percolation threshold
     {
-        return StdStats.mean(X);
+        return StdStats.mean(arrayOfPercolation);
     }
     public double stddev()                        // sample standard deviation of percolation threshold
     {
-        return StdStats.stddev(X);
+        return StdStats.stddev(arrayOfPercolation);
     }
     public double confidenceLo()                  // low  endpoint of 95% confidence interval
     {
-        return (mean() - 1.96 * stddev() / Math.sqrt(T));        
+        return (mean() - 1.96 * stddev() / Math.sqrt(loops));        
     }
     public double confidenceHi()                  // high endpoint of 95% confidence interval
     {
-        return (mean() + 1.96 * stddev() / Math.sqrt(T));   
+        return (mean() + 1.96 * stddev() / Math.sqrt(loops));   
     }
 
     public static void main(String[] args)    // test client (described below)    
     {
         int n, trials;
-        //n = StdIn.readInt();
         n = Integer.parseInt(args[0]);
         trials = Integer.parseInt(args[1]);
         PercolationStats PS = new PercolationStats(n, trials);
