@@ -92,7 +92,7 @@ public class Percolation {
    } 
    public static void main(String[] args)  // test client (optional)
    {
-       Percolation P = new Percolation(10);
+       Percolation P = new Percolation(100);
        int open_site = 0;
        int random_N;   
        int[] exist_Site = new int[P.N * P.N + 1];
