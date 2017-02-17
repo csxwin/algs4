@@ -4,12 +4,14 @@ import edu.princeton.cs.algs4.StdOut;
 
 public class Percolation {
     private int[] Open_node;
-    public double Threshold;
-    public int N;
+    private double Threshold;
+    private int N;
+    private static int open_site;
     private WeightedQuickUnionUF UF;
 
     public Percolation(int n)               // create n-by-n grid, with all sites blocked
     {
+        open_site = 0;
         if(n <= 0)
         {
             throw new java.lang.IllegalArgumentException("n less than 1");
@@ -86,6 +88,11 @@ public class Percolation {
        return UF.connected(0, (i - 1) * N + j);   // use 0 to represent top root       
    }
 
+   public int numberOfOpenSites()
+   {
+       return open_site;    
+   }
+   
    public boolean percolates()             // does the system percolate?
    {
        return UF.connected(0, N * N + 1);     
@@ -93,7 +100,7 @@ public class Percolation {
    public static void main(String[] args)  // test client (optional)
    {
        Percolation P = new Percolation(100);
-       int open_site = 0;
+       
        int random_N;   
        int[] exist_Site = new int[P.N * P.N + 1];
        int i, j;
@@ -115,7 +122,7 @@ public class Percolation {
                open_site++;
                exist_Site[open_site] = random_N;
            }
-           if((int)(random_N % P.N) == 0){
+           if(random_N % P.N == 0){
                i = random_N / P.N;
                j = P.N;
            }

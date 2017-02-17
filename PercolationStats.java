@@ -20,13 +20,13 @@ public class PercolationStats{
             Percolation P = new Percolation(N);
             int open_site = 1;
             int random_N;    
-            int[] exist_Site = new int[P.N * P.N + 1];
+            int[] exist_Site = new int[N * N + 1];
             int i, j;
             while(P.percolates() == false)
             {
-                if(open_site > P.N * P.N){break;}
+                if(open_site > N * N){break;}
                 do{
-                    random_N = StdRandom.uniform(0, P.N * P.N);
+                    random_N = StdRandom.uniform(0, N * N);
                 }while(random_N == 0);
                 boolean IsExist = false;
                 for(int array_Index = 1; array_Index <= open_site;   array_Index++)
@@ -40,18 +40,17 @@ public class PercolationStats{
                     open_site++;
                     exist_Site[open_site] = random_N;
                 }
-                if((int)(random_N % P.N) == 0){
-                    i = random_N / P.N;
-                    j = P.N;
+                if(random_N % N == 0){
+                    i = random_N / N;
+                    j = N;
                 }
                 else{
-                    i = random_N / P.N + 1;
-                    j = random_N % P.N;
+                    i = random_N / N + 1;
+                    j = random_N % N;
                 }      
                 P.open(i, j);
             }
-            P.Threshold = open_site / (double)(P.N * P.N);  
-            X[loop] = P.Threshold;
+            X[loop] = open_site / (double)(N * N);  
         }
     }
     public double mean()                          // sample mean of percolation threshold
