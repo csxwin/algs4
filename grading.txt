@@ -8,19 +8,19 @@ API:          PASSED
 Findbugs:     PASSED
 Checkstyle:   PASSED
 
-Correctness:  12/26 tests passed
+Correctness:  19/26 tests passed
 Memory:       8/8 tests passed
 Timing:       9/9 tests passed
 
-Aggregate score: 67.69%
+Aggregate score: 83.85%
 [Compilation: 5%, API: 5%, Findbugs: 0%, Checkstyle: 0%, Correctness: 60%, Memory: 10%, Timing: 20%]
 
 ASSESSMENT DETAILS
 
 The following files were submitted:
 ----------------------------------
-4.8K Feb 17 03:02 Percolation.java
-3.3K Feb 17 03:02 PercolationStats.java
+4.5K Feb 17 03:36 Percolation.java
+3.3K Feb 17 03:36 PercolationStats.java
 
 
 ********************************************************************************
@@ -79,79 +79,23 @@ Except as noted, a site is opened at most once.
 
 Test 1: open predetermined list of sites using file inputs
   * filename = input6.txt
-    - numberOfOpenSites() returns wrong value [after 1 site opened]
-    - student   = 0
-    - reference = 1
-    - failed after call 1 to isOpen()
   * filename = input8.txt
-    - numberOfOpenSites() returns wrong value [after 1 site opened]
-    - student   = 0
-    - reference = 1
-    - failed after call 1 to isOpen()
   * filename = input8-no.txt
-    - numberOfOpenSites() returns wrong value [after 1 site opened]
-    - student   = 0
-    - reference = 1
-    - failed after call 1 to isOpen()
   * filename = input10-no.txt
-    - numberOfOpenSites() returns wrong value [after 1 site opened]
-    - student   = 0
-    - reference = 1
-    - failed after call 1 to isOpen()
   * filename = greeting57.txt
-    - numberOfOpenSites() returns wrong value [after 1 site opened]
-    - student   = 0
-    - reference = 1
-    - failed after call 1 to isOpen()
   * filename = heart25.txt
-    - numberOfOpenSites() returns wrong value [after 1 site opened]
-    - student   = 0
-    - reference = 1
-    - failed after call 1 to isOpen()
-==> FAILED
+==> passed
 
 Test 2: open random sites until just before system percolates
   * n = 3
-    - numberOfOpenSites() returns wrong value [after 1 site opened]
-    - student   = 0
-    - reference = 1
-    - failed after call 1 to isOpen()
   * n = 5
-    - numberOfOpenSites() returns wrong value [after 1 site opened]
-    - student   = 0
-    - reference = 1
-    - failed after call 1 to isOpen()
   * n = 10
-    - numberOfOpenSites() returns wrong value [after 1 site opened]
-    - student   = 0
-    - reference = 1
-    - failed after call 1 to isOpen()
   * n = 10
-    - numberOfOpenSites() returns wrong value [after 1 site opened]
-    - student   = 0
-    - reference = 1
-    - failed after call 1 to isOpen()
   * n = 20
-    - numberOfOpenSites() returns wrong value [after 1 site opened]
-    - student   = 0
-    - reference = 1
-    - failed after call 1 to isOpen()
   * n = 20
-    - numberOfOpenSites() returns wrong value [after 1 site opened]
-    - student   = 0
-    - reference = 1
-    - failed after call 1 to isOpen()
   * n = 50
-    - numberOfOpenSites() returns wrong value [after 1 site opened]
-    - student   = 0
-    - reference = 1
-    - failed after call 1 to isOpen()
   * n = 50
-    - numberOfOpenSites() returns wrong value [after 1 site opened]
-    - student   = 0
-    - reference = 1
-    - failed after call 1 to isOpen()
-==> FAILED
+==> passed
 
 Test 3: open predetermined sites for n = 1 and n = 2
   * filename = input1.txt
@@ -161,123 +105,71 @@ Test 3: open predetermined sites for n = 1 and n = 2
     - failed after call 1 to isOpen()
   * filename = input1-no.txt
   * filename = input2.txt
-    - numberOfOpenSites() returns wrong value [after 1 site opened]
-    - student   = 0
-    - reference = 1
-    - failed after call 1 to isOpen()
   * filename = input2-no.txt
-    - numberOfOpenSites() returns wrong value [after 1 site opened]
-    - student   = 0
-    - reference = 1
-    - failed after call 1 to isOpen()
 ==> FAILED
 
 Test 4: check for backwash with predetermined sites
   * filename = input20.txt
-    - numberOfOpenSites() returns wrong value [after 1 site opened]
-    - student   = 0
-    - reference = 1
-    - failed after call 1 to isOpen()
+    - isFull(18, 1) returns wrong value [after 231 sites opened]
+    - student   = true
+    - reference = false
+    - failed after call 231 to isOpen()
   * filename = input10.txt
-    - numberOfOpenSites() returns wrong value [after 1 site opened]
-    - student   = 0
-    - reference = 1
-    - failed after call 1 to isOpen()
+    - isFull(9, 1) returns wrong value [after 56 sites opened]
+    - student   = true
+    - reference = false
+    - failed after call 56 to isOpen()
   * filename = input50.txt
-    - numberOfOpenSites() returns wrong value [after 1 site opened]
-    - student   = 0
-    - reference = 1
-    - failed after call 1 to isOpen()
+    - isFull(22, 28) returns wrong value [after 1412 sites opened]
+    - student   = true
+    - reference = false
+    - failed after call 1412 to isOpen()
   * filename = jerry47.txt
-    - numberOfOpenSites() returns wrong value [after 1 site opened]
-    - student   = 0
-    - reference = 1
-    - failed after call 1 to isOpen()
+    - isFull(11, 47) returns wrong value [after 1076 sites opened]
+    - student   = true
+    - reference = false
+    - failed after call 1076 to isOpen()
 ==> FAILED
 
 Test 5: check for backwash with predetermined sites that have
         multiple percolating paths
   * filename = input3.txt
-    - numberOfOpenSites() returns wrong value [after 1 site opened]
-    - student   = 0
-    - reference = 1
-    - failed after call 1 to isOpen()
+    - isFull(3, 1) returns wrong value [after 4 sites opened]
+    - student   = true
+    - reference = false
+    - failed after call 4 to isOpen()
   * filename = input4.txt
-    - numberOfOpenSites() returns wrong value [after 1 site opened]
-    - student   = 0
-    - reference = 1
-    - failed after call 1 to isOpen()
+    - isFull(4, 4) returns wrong value [after 7 sites opened]
+    - student   = true
+    - reference = false
+    - failed after call 7 to isOpen()
   * filename = input7.txt
-    - numberOfOpenSites() returns wrong value [after 1 site opened]
-    - student   = 0
-    - reference = 1
-    - failed after call 1 to isOpen()
+    - isFull(6, 1) returns wrong value [after 12 sites opened]
+    - student   = true
+    - reference = false
+    - failed after call 12 to isOpen()
 ==> FAILED
 
 Test 6: open predetermined sites with long percolating path
   * filename = snake13.txt
-    - numberOfOpenSites() returns wrong value [after 1 site opened]
-    - student   = 0
-    - reference = 1
-    - failed after call 1 to isOpen()
   * filename = snake101.txt
-    - numberOfOpenSites() returns wrong value [after 1 site opened]
-    - student   = 0
-    - reference = 1
-    - failed after call 1 to isOpen()
-==> FAILED
+==> passed
 
 Test 7: open every site
   * filename = input5.txt
-    - numberOfOpenSites() returns wrong value [after 1 site opened]
-    - student   = 0
-    - reference = 1
-    - failed after call 1 to isOpen()
-==> FAILED
+==> passed
 
 Test 8: open random sites until just before system percolates,
         allowing open() to be called on a site more than once
   * n = 3
-    - numberOfOpenSites() returns wrong value [after 1 site opened]
-    - student   = 0
-    - reference = 1
-    - failed after call 1 to isOpen()
   * n = 5
-    - numberOfOpenSites() returns wrong value [after 1 site opened]
-    - student   = 0
-    - reference = 1
-    - failed after call 1 to isOpen()
   * n = 10
-    - numberOfOpenSites() returns wrong value [after 1 site opened]
-    - student   = 0
-    - reference = 1
-    - failed after call 1 to isOpen()
   * n = 10
-    - numberOfOpenSites() returns wrong value [after 1 site opened]
-    - student   = 0
-    - reference = 1
-    - failed after call 1 to isOpen()
   * n = 20
-    - numberOfOpenSites() returns wrong value [after 1 site opened]
-    - student   = 0
-    - reference = 1
-    - failed after call 1 to isOpen()
   * n = 20
-    - numberOfOpenSites() returns wrong value [after 1 site opened]
-    - student   = 0
-    - reference = 1
-    - failed after call 1 to isOpen()
   * n = 50
-    - numberOfOpenSites() returns wrong value [after 1 site opened]
-    - student   = 0
-    - reference = 1
-    - failed after call 1 to isOpen()
   * n = 50
-    - numberOfOpenSites() returns wrong value [after 1 site opened]
-    - student   = 0
-    - reference = 1
-    - failed after call 1 to isOpen()
-==> FAILED
+==> passed
 
 Test 9: check that IndexOutOfBoundsException is thrown if (col, row) is out of bounds
   * n = 10, (col, row) = (0, 6)
@@ -296,16 +188,7 @@ Test 10: check that IllegalArgumentException is thrown if n <= 0 in constructor
 
 Test 11: create multiple Percolation objects at the same time
          (to make sure you didn't store data in static variables)
-    - numberOfOpenSites() returns wrong value [after 1 site opened]
-    - student   = 0
-    - reference = 1
-    - numberOfOpenSites() returns wrong value [after 1 site opened]
-    - student   = 0
-    - reference = 1
-    - numberOfOpenSites() returns wrong value [after 1 site opened]
-    - student   = 0
-    - reference = 1
-==> FAILED
+==> passed
 
 Test 12: open predetermined list of sites using file inputs,
          but change the order in which methods are called
@@ -319,149 +202,60 @@ Test 12: open predetermined list of sites using file inputs,
 
 Test 13: call all methods in random order until just before system percolates
   * n = 3
-    - numberOfOpenSites() returns wrong value [after 3 sites opened]
-    - student   = 0
-    - reference = 3
-    - failed on trial 1 of 40
-
   * n = 5
-    - numberOfOpenSites() returns wrong value [after 3 sites opened]
-    - student   = 0
-    - reference = 3
-    - failed on trial 1 of 20
-
   * n = 7
-    - numberOfOpenSites() returns wrong value [after 2 sites opened]
-    - student   = 0
-    - reference = 2
-    - failed on trial 1 of 10
-    - sequence of operations was:
-         percolation.isOpen(i, j) for each i and j
-         percolation.isFull(i, j) for each i and j
-         percolation.isFull(i, j) for each i and j
-         percolation.open(7, 2)
-         percolation.isFull(i, j) for each i and j
-         percolation.isFull(i, j) for each i and j
-         percolation.percolates()
-         percolation.isFull(i, j) for each i and j
-         percolation.open(6, 3)
-         percolation.percolates()
-         percolation.percolates()
-         percolation.numberOfOpenSites()
-
   * n = 10
-    - numberOfOpenSites() returns wrong value [after 1 site opened]
-    - student   = 0
-    - reference = 1
-    - failed on trial 1 of 5
-    - sequence of operations was:
-         percolation.isFull(i, j) for each i and j
-         percolation.percolates()
-         percolation.isFull(i, j) for each i and j
-         percolation.numberOfOpenSites()
-         percolation.percolates()
-         percolation.numberOfOpenSites()
-         percolation.numberOfOpenSites()
-         percolation.open(3, 5)
-         percolation.isFull(i, j) for each i and j
-         percolation.numberOfOpenSites()
-
   * n = 20
-    - numberOfOpenSites() returns wrong value [after 2 sites opened]
-    - student   = 0
-    - reference = 2
-    - failed on trial 1 of 2
-
   * n = 50
-    - numberOfOpenSites() returns wrong value [after 2 sites opened]
-    - student   = 0
-    - reference = 2
-    - failed on trial 1 of 1
-    - sequence of operations was:
-         percolation.isFull(i, j) for each i and j
-         percolation.percolates()
-         percolation.numberOfOpenSites()
-         percolation.numberOfOpenSites()
-         percolation.numberOfOpenSites()
-         percolation.open(30, 9)
-         percolation.isOpen(i, j) for each i and j
-         percolation.open(41, 45)
-         percolation.percolates()
-         percolation.numberOfOpenSites()
-
 ==> passed
 
 Test 14: call all methods in random order until almost all sites are open,
          but with inputs not prone to backwash
   * n = 3
-    - numberOfOpenSites() returns wrong value [after 1 site opened]
-    - student   = 0
-    - reference = 1
-    - failed on trial 1 of 40
   * n = 5
-    - numberOfOpenSites() returns wrong value [after 3 sites opened]
-    - student   = 0
-    - reference = 3
-    - failed on trial 1 of 20
   * n = 7
-    - numberOfOpenSites() returns wrong value [after 1 site opened]
-    - student   = 0
-    - reference = 1
-    - failed on trial 1 of 10
   * n = 10
-    - numberOfOpenSites() returns wrong value [after 1 site opened]
-    - student   = 0
-    - reference = 1
-    - failed on trial 1 of 5
   * n = 20
-    - numberOfOpenSites() returns wrong value [after 3 sites opened]
-    - student   = 0
-    - reference = 3
-    - failed on trial 1 of 2
   * n = 50
-    - numberOfOpenSites() returns wrong value [after 1 site opened]
-    - student   = 0
-    - reference = 1
-    - failed on trial 1 of 1
-==> FAILED
+==> passed
 
 Test 15: call all methods in random order until all sites are open,
          allowing open() to be called on a site more than once
          (these inputs are prone to backwash)
   * n = 3
-    - numberOfOpenSites() returns wrong value [after 2 sites opened]
-    - student   = 0
-    - reference = 2
-    - failed on trial 1 of 40
+    - isFull(3, 3) returns wrong value [after 6 sites opened]
+    - student   = true
+    - reference = false
+    - failed on trial 26 of 40
   * n = 5
-    - numberOfOpenSites() returns wrong value [after 1 site opened]
-    - student   = 0
-    - reference = 1
+    - isFull(5, 1) returns wrong value [after 18 sites opened]
+    - student   = true
+    - reference = false
     - failed on trial 1 of 20
   * n = 7
-    - numberOfOpenSites() returns wrong value [after 2 sites opened]
-    - student   = 0
-    - reference = 2
+    - isFull(6, 7) returns wrong value [after 30 sites opened]
+    - student   = true
+    - reference = false
     - failed on trial 1 of 10
   * n = 10
-    - numberOfOpenSites() returns wrong value [after 1 site opened]
-    - student   = 0
-    - reference = 1
-    - failed on trial 1 of 5
+    - isFull(9, 1) returns wrong value [after 59 sites opened]
+    - student   = true
+    - reference = false
+    - failed on trial 2 of 5
   * n = 20
-    - numberOfOpenSites() returns wrong value [after 1 site opened]
-    - student   = 0
-    - reference = 1
+    - isFull(8, 1) returns wrong value [after 229 sites opened]
+    - student   = true
+    - reference = false
     - failed on trial 1 of 2
   * n = 50
-    - numberOfOpenSites() returns wrong value [after 1 site opened]
-    - student   = 0
-    - reference = 1
+    - isFull(47, 14) returns wrong value [after 1604 sites opened]
+    - student   = true
+    - reference = false
     - failed on trial 1 of 1
 ==> FAILED
 
 
-Total: 4/15 tests passed!
+Total: 11/15 tests passed!
 
 
 ================================================================
@@ -497,17 +291,17 @@ Test 3: Test that PercolationStats does not call open() after system percolates
 Test 4: Test that mean() is consistent with the number of intercepted calls to open()
         on blocked sites
   * n =  20, trials =  10
-    - PercolationStats mean = 0.5915
-    - total calls to open() / (N*N*T) = 0.5890000000000001
+    - PercolationStats mean = 0.56375
+    - total calls to open() / (N*N*T) = 0.56125
   * n =  50, trials =  20
-    - PercolationStats mean = 0.5964200000000001
-    - total calls to open() / (N*N*T) = 0.59602
+    - PercolationStats mean = 0.6006400000000001
+    - total calls to open() / (N*N*T) = 0.6002400000000001
   * n = 100, trials =  50
-    - PercolationStats mean = 0.591682
-    - total calls to open() / (N*N*T) = 0.591582
+    - PercolationStats mean = 0.5930420000000002
+    - total calls to open() / (N*N*T) = 0.5929420000000001
   * n =  64, trials = 150
-    - PercolationStats mean = 0.5946695963541667
-    - total calls to open() / (N*N*T) = 0.5944254557291667
+    - PercolationStats mean = 0.5910026041666666
+    - total calls to open() / (N*N*T) = 0.5907584635416666
 ==> FAILED
 
 Test 5: Test that stddev() is consistent with the number of intercepted calls to open()
@@ -535,23 +329,23 @@ Test 7: Check whether exception is thrown if either n or trials is out of bounds
 Test 8: Create two PercolationStats objects at the same time and check mean()
         (to make sure you didn't store data in static variables)
   * n1 =  50, trials1 =  10, n2 =  50, trials2 =   5
-    - PercolationStats object 1 mean = 0.58572
-    - total calls to open() / (N1*N1*T1)  = 0.5853200000000001
+    - PercolationStats object 1 mean = 0.60604
+    - total calls to open() / (N1*N1*T1)  = 0.6056400000000001
   * n1 =  50, trials1 =   5, n2 =  50, trials2 =  10
-    - PercolationStats object 1 mean = 0.58696
-    - total calls to open() / (N1*N1*T1)  = 0.5865600000000001
+    - PercolationStats object 1 mean = 0.59616
+    - total calls to open() / (N1*N1*T1)  = 0.5957600000000001
   * n1 =  50, trials1 =  10, n2 =  25, trials2 =  10
-    - PercolationStats object 1 mean = 0.58972
-    - total calls to open() / (N1*N1*T1)  = 0.5893200000000001
+    - PercolationStats object 1 mean = 0.6117199999999999
+    - total calls to open() / (N1*N1*T1)  = 0.61132
   * n1 =  25, trials1 =  10, n2 =  50, trials2 =  10
-    - PercolationStats object 1 mean = 0.58272
-    - total calls to open() / (N1*N1*T1)  = 0.5811200000000001
+    - PercolationStats object 1 mean = 0.6044799999999999
+    - total calls to open() / (N1*N1*T1)  = 0.60288
   * n1 =  50, trials1 =  10, n2 =  15, trials2 = 100
-    - PercolationStats object 1 mean = 0.5940799999999999
-    - total calls to open() / (N1*N1*T1)  = 0.59368
+    - PercolationStats object 1 mean = 0.59692
+    - total calls to open() / (N1*N1*T1)  = 0.59652
   * n1 =  15, trials1 = 100, n2 =  50, trials2 =  10
-    - PercolationStats object 1 mean = 0.5890666666666662
-    - total calls to open() / (N1*N1*T1)  = 0.5846222222222219
+    - PercolationStats object 1 mean = 0.5930666666666664
+    - total calls to open() / (N1*N1*T1)  = 0.588622222222222
 ==> FAILED
 
 Test 9: Check that the methods return the same value, regardless of
@@ -575,11 +369,11 @@ Test 11: Check distribution of number of sites opened until percolation
             value  observed  expected   2*O*ln(O/E)
         -------------------------------------------
                 2         0   33333.0          0.00
-                3     33084   66667.0     -46361.29
+                3     33447   66667.0     -46140.00
         -------------------------------------------
-                      33084  100000.0     -46361.29
+                      33447  100000.0     -46140.00
     
-    G-statistic = -46361.29 (p-value = 0.000000, reject if p-value <= 0.0001)
+    G-statistic = -46140.00 (p-value = 0.000000, reject if p-value <= 0.0001)
     Note: a correct solution will fail this test by bad luck 1 time in 10,000.
 
 
@@ -588,14 +382,14 @@ Test 11: Check distribution of number of sites opened until percolation
             value  observed  expected   2*O*ln(O/E)
         -------------------------------------------
                 3         0    3571.0          0.00
-                4      3541   13889.0      -9678.88
-                5     14997   29365.0     -20154.57
-                6     31422   32937.0      -2959.22
-                7     32122   20238.0      29679.39
+                4      3624   13889.0      -9737.82
+                5     15050   29365.0     -20119.61
+                6     31496   32937.0      -2818.02
+                7     32299   20238.0      30197.90
         -------------------------------------------
-                      82082  100000.0      -3113.29
+                      82469  100000.0      -2477.55
     
-    G-statistic = -3113.29 (p-value = 0.000000, reject if p-value <= 0.0001)
+    G-statistic = -2477.55 (p-value = 0.000000, reject if p-value <= 0.0001)
     Note: a correct solution will fail this test by bad luck 1 time in 10,000.
 
 
@@ -604,19 +398,19 @@ Test 11: Check distribution of number of sites opened until percolation
             value  observed  expected   2*O*ln(O/E)
         -------------------------------------------
                 4         0     220.0          0.00
-                5       209    1154.0       -714.22
-                6      1157    3497.0      -2559.46
-                7      3738    7822.0      -5520.20
-                8      8272   13850.0      -8526.93
-                9     14780   19542.0      -8255.84
-               10     20425   21522.0      -2137.11
-               11     21694   17924.0       8282.56
-               12     17333   10733.0      16615.04
-               13      9533    3736.0      17859.96
+                5       217    1154.0       -725.25
+                6      1281    3497.0      -2572.93
+                7      3684    7822.0      -5547.67
+                8      8426   13850.0      -8374.82
+                9     14870   19542.0      -8125.57
+               10     20471   21522.0      -2049.82
+               11     21629   17924.0       8127.94
+               12     17087   10733.0      15890.73
+               13      9413    3736.0      17396.66
         -------------------------------------------
-                      97141  100000.0      15043.80
+                      97078  100000.0      14019.27
     
-    G-statistic = 15043.80 (p-value = 0.000000, reject if p-value <= 0.0001)
+    G-statistic = 14019.27 (p-value = 0.000000, reject if p-value <= 0.0001)
     Note: a correct solution will fail this test by bad luck 1 time in 10,000.
 
 

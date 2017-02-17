@@ -3,7 +3,7 @@ import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 import edu.princeton.cs.algs4.StdOut;
 
 public class Percolation {
-    private static int openSite = 0;
+    private int openSite;
     private int[] openNode;
     private double threshold;
     private int numOfGrid;
@@ -34,6 +34,7 @@ public class Percolation {
        }
        if (!isOpen(i, j))
        {
+           openSite++;
            openNode[(i - 1) * numOfGrid + j] = 1;
            if (i == 1)
            {
@@ -96,30 +97,17 @@ public class Percolation {
    } 
    public static void main(String[] args)  // test client (optional)
    {
-       Percolation playground = new Percolation(100);
-       
+       Percolation playground = new Percolation(10);
+       // StdOut.printf("\n%d\n", playground.numberOfOpenSites());
        int randomNumOfGrid;   
-       int[] existSite = new int[playground.numOfGrid * playground.numOfGrid + 1];
        int i, j;
        while (!playground.percolates())
        {
-           if (openSite > playground.numOfGrid * playground.numOfGrid) { break; }
+           if (playground.numberOfOpenSites() > playground.numOfGrid * playground.numOfGrid) { break; }
            do {
                randomNumOfGrid = StdRandom.uniform(0, playground.numOfGrid * 
                                                     playground.numOfGrid);
            } while (randomNumOfGrid == 0);
-           boolean isExist = false;
-           for (int arrayIndex = 1; arrayIndex <= openSite;   arrayIndex++)
-           {
-               if (randomNumOfGrid == existSite[arrayIndex])
-               {
-                   isExist = true;
-               }
-           }
-           if (!isExist) {
-               openSite++;
-               existSite[openSite] = randomNumOfGrid;
-           }
            if (randomNumOfGrid % playground.numOfGrid == 0) {
                i = randomNumOfGrid / playground.numOfGrid;
                j = playground.numOfGrid;
@@ -130,7 +118,8 @@ public class Percolation {
            }    
            playground.open(i, j);
        }
-       playground.threshold = openSite / (double) (playground.numOfGrid * playground.numOfGrid);
+       playground.threshold = playground.numberOfOpenSites() / (double) (playground.numOfGrid * playground.numOfGrid);
        StdOut.printf("\n%f\n", playground.threshold);
+       // StdOut.printf("\n%d\n", playground.numberOfOpenSites());
    }
 }
