@@ -26,7 +26,7 @@ public class PercolationStats{
             {
                 if(open_site > P.N * P.N){break;}
                 do{
-                    random_N = (int)(StdRandom.random() * P.N * P.N);
+                    random_N = StdRandom.uniform(0, P.N * P.N);
                 }while(random_N == 0);
                 boolean IsExist = false;
                 for(int array_Index = 1; array_Index <= open_site;   array_Index++)
