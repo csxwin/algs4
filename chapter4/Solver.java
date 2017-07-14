@@ -9,7 +9,7 @@ public class Solver {
     
     public Solver(Board initial)           // find a solution to the initial board (using the A* algorithm)
     {
-        
+        Board locBoard = initial;
     }
     
     public boolean isSolvable()            // is the initial board solvable?
