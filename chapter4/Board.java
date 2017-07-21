@@ -132,12 +132,18 @@ public class Board {
     }
     public Board twin()                    // a board that is obtained by exchanging any pair of blocks
     {
-        int swapX;
-        int swapY;
+        int swapX1;
+        int swapY1;
+        int swapX2;
+        int swapY2;
         do {
-            swapX = StdRandom.uniform(3);
-            swapY = StdRandom.uniform(3);
-        } while (swapX == blankX && swapY == blankY);
+            swapX1 = StdRandom.uniform(3);
+            swapY1 = StdRandom.uniform(3);
+        } while (swapX1 == blankX && swapY1 == blankY);
+        do {
+            swapX2 = StdRandom.uniform(3);
+            swapY2 = StdRandom.uniform(3);
+        } while (swapX2 == blankX && swapY2 == blankY);
         
         int[][] twinBlock = new int[3][3];
         for (int i = 0; i < dimension; i++)
@@ -147,9 +153,9 @@ public class Board {
                 twinBlock[i][j] = locBlocks[i][j];
             }
         }
-        int temp = twinBlock[swapX][swapY];
-        twinBlock[swapX][swapY] = twinBlock[blankX][blankY];
-        twinBlock[blankX][blankY] = temp;
+        int temp = twinBlock[swapX1][swapY1];
+        twinBlock[swapX1][swapY1] = twinBlock[swapX2][swapY2];
+        twinBlock[swapX2][swapY2] = temp;
         
         Board newBoard = new Board(twinBlock);
         return newBoard;
