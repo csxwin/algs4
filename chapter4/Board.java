@@ -2,34 +2,39 @@ import java.util.Iterator;
 import edu.princeton.cs.algs4.StdRandom;
 
 public class Board {
-    private int[][] locBlocks = new int[3][3];
-    
-    private int[][] neighbor1 = new int[3][3];
-    private int[][] neighbor2 = new int[3][3];
-    private int[][] neighbor3 = new int[3][3];
-    private int[][] neighbor4 = new int[3][3];
+    private int[][] initBlocks; //initial blocks
+    private int[][] neighborBlock1;  //neigbor blocks
+    private int[][] neighborBlock2;  //neigbor blocks
+    private int[][] neighborBlock3;  //neigbor blocks
+    private int[][] neighborBlock4;  //neigbor blocks
     private Board[] neighborBoard = new Board[4];
-                
+
     private int dimension;
     private int numOfBlocksOutOfSpace = 0;
     private int sumOfManhattanDistance = 0;
     private int blankX = 0;
     private int blankY = 0;
-    
+
     private int numOfNeighbor = 0;
-    
+
     public Board(int[][] blocks)           // construct a board from an n-by-n array of blocks
     {
-        //for now, allocate a big two dimension array
-        //todo: dynamic creation
-//        lockBlocks = new int[3][3];
-        //copy value from blocks to locBlocks
+        initBlocks = new int[blocks[0].length][blocks[0].length];
+        neighborBlock1 = new int[blocks[0].length][blocks[0].length];
+        neighborBlock2 = new int[blocks[0].length][blocks[0].length];
+        neighborBlock3 = new int[blocks[0].length][blocks[0].length];
+        neighborBlock4 = new int[blocks[0].length][blocks[0].length];
         for (int i = 0; i < blocks[0].length; i++)
         {
             for (int j = 0; j < blocks[0].length; j++)
             {
-                locBlocks[i][j] = blocks[i][j];
-                if (locBlocks[i][j] == 0)
+                initBlocks[i][j] = blocks[i][j];
+                // create neighbor blocks
+                neighborBlock1[i][j] = initBlocks[i][j];
+                neighborBlock2[i][j] = initBlocks[i][j];
+                neighborBlock3[i][j] = initBlocks[i][j];
+                neighborBlock4[i][j] = initBlocks[i][j];
+                if (initBlocks[i][j] == 0)
                 {
                     //init location of blank
                     blankX = i;
@@ -38,7 +43,7 @@ public class Board {
             }
         }
         dimension = blocks[0].length;
-                
+
         /*
          * compute sum of distance between blocks and goal
          */
@@ -46,26 +51,20 @@ public class Board {
         {
             for (int j = 0; j < dimension; j++)
             {
-                neighbor1[i][j] = locBlocks[i][j];
-                neighbor2[i][j] = locBlocks[i][j];                
-                neighbor3[i][j] = locBlocks[i][j];
-                neighbor4[i][j] = locBlocks[i][j];
-                
-                
-                if (locBlocks[i][j] != 0)
+                if (initBlocks[i][j] != 0)
                 {
-                    if (locBlocks[i][j] != i * dimension + j + 1)
+                    if (initBlocks[i][j] != i * dimension + j + 1)
                     {
                         numOfBlocksOutOfSpace++;
-                        sumOfManhattanDistance += (i >= (locBlocks[i][j] - 1) / dimension ? 
-                                                        i - (locBlocks[i][j] - 1) / dimension : (locBlocks[i][j] - 1) / dimension - i)
-                                                       + (j >= (locBlocks[i][j] - 1) % dimension ? 
-                                                              j - (locBlocks[i][j] - 1) % dimension : (locBlocks[i][j] - 1) % dimension - j);
-                        
+                        sumOfManhattanDistance += (i >= (initBlocks[i][j] - 1) / dimension ?
+                                                        i - (initBlocks[i][j] - 1) / dimension : (initBlocks[i][j] - 1) / dimension - i)
+                                                       + (j >= (initBlocks[i][j] - 1) % dimension ?
+                                                              j - (initBlocks[i][j] - 1) % dimension : (initBlocks[i][j] - 1) % dimension - j);
+
                     }
                 }
             }
-        }  
+        }
     }
 
     private void findAllNeighbor()
@@ -73,31 +72,31 @@ public class Board {
         numOfNeighbor = 0;
         if (blankX > 0)
         {
-            int temp = neighbor1[blankX - 1][blankY];
-            neighbor1[blankX - 1][blankY] = neighbor1[blankX][blankY];
-            neighbor1[blankX][blankY] = temp;
-            neighborBoard[numOfNeighbor++] = new Board(neighbor1);
+            int temp = neighborBlock1[blankX - 1][blankY];
+            neighborBlock1[blankX - 1][blankY] = neighborBlock1[blankX][blankY];
+            neighborBlock1[blankX][blankY] = temp;
+            neighborBoard[numOfNeighbor++] = new Board(neighborBlock1);
         }
         if (blankX < 2)
         {
-            int temp = neighbor2[blankX + 1][blankY];
-            neighbor2[blankX + 1][blankY] = neighbor2[blankX][blankY];
-            neighbor2[blankX][blankY] = temp;
-            neighborBoard[numOfNeighbor++] = new Board(neighbor2);
+            int temp = neighborBlock2[blankX + 1][blankY];
+            neighborBlock2[blankX + 1][blankY] = neighborBlock2[blankX][blankY];
+            neighborBlock2[blankX][blankY] = temp;
+            neighborBoard[numOfNeighbor++] = new Board(neighborBlock2);
         }
         if (blankY > 0)
         {
-            int temp = neighbor3[blankX][blankY - 1];
-            neighbor3[blankX][blankY - 1] = neighbor3[blankX][blankY];
-            neighbor3[blankX][blankY] = temp;
-            neighborBoard[numOfNeighbor++] = new Board(neighbor3);
+            int temp = neighborBlock3[blankX][blankY - 1];
+            neighborBlock3[blankX][blankY - 1] = neighborBlock3[blankX][blankY];
+            neighborBlock3[blankX][blankY] = temp;
+            neighborBoard[numOfNeighbor++] = new Board(neighborBlock3);
         }
         if (blankY < 2)
         {
-            int temp = neighbor4[blankX][blankY + 1];
-            neighbor4[blankX][blankY + 1] = neighbor4[blankX][blankY];
-            neighbor4[blankX][blankY] = temp;
-            neighborBoard[numOfNeighbor++] = new Board(neighbor4);
+            int temp = neighborBlock4[blankX][blankY + 1];
+            neighborBlock4[blankX][blankY + 1] = neighborBlock4[blankX][blankY];
+            neighborBlock4[blankX][blankY] = temp;
+            neighborBoard[numOfNeighbor++] = new Board(neighborBlock4);
         }
     }
     public int dimension()                 // board dimension n
@@ -121,7 +120,7 @@ public class Board {
             {
                 if (!(i == 2 & j == 2))
                 {
-                    if (locBlocks[i][j] != i * dimension + j + 1)
+                    if (initBlocks[i][j] != i * dimension + j + 1)
                     {
                         isGoal = false;
                     }
@@ -144,19 +143,19 @@ public class Board {
             swapX2 = StdRandom.uniform(3);
             swapY2 = StdRandom.uniform(3);
         } while (swapX2 == blankX && swapY2 == blankY);
-        
-        int[][] twinBlock = new int[3][3];
+
+        int[][] twinBlock = new int[dimension][dimension];
         for (int i = 0; i < dimension; i++)
         {
             for (int j = 0; j < dimension; j++)
             {
-                twinBlock[i][j] = locBlocks[i][j];
+                twinBlock[i][j] = initBlocks[i][j];
             }
         }
         int temp = twinBlock[swapX1][swapY1];
         twinBlock[swapX1][swapY1] = twinBlock[swapX2][swapY2];
         twinBlock[swapX2][swapY2] = temp;
-        
+
         Board newBoard = new Board(twinBlock);
         return newBoard;
     }
@@ -195,14 +194,14 @@ public class Board {
             }
         };
     }
-    
+
     public String toString()               // string representation of this board (in the output format specified below)
     {
         StringBuilder s = new StringBuilder();
         s.append(dimension + "\n");
         for (int i = 0; i < dimension; i++) {
             for (int j = 0; j < dimension; j++) {
-                s.append(String.format("%2d ", locBlocks[i][j]));
+                s.append(String.format("%2d ", initBlocks[i][j]));
             }
             s.append("\n");
         }
@@ -213,7 +212,7 @@ public class Board {
     {
         int[][] initBoard = new int[3][3];
         int[][] initBoard2 = new int[3][3];
-        
+
         initBoard[0][0] = 5;
         initBoard[0][1] = 1;
         initBoard[0][2] = 7;
@@ -223,7 +222,7 @@ public class Board {
         initBoard[2][0] = 3;
         initBoard[2][1] = 2;
         initBoard[2][2] = 4;
-        
+
         initBoard2[0][0] = 1;
         initBoard2[0][1] = 2;
         initBoard2[0][2] = 3;
@@ -233,10 +232,10 @@ public class Board {
         initBoard2[2][0] = 7;
         initBoard2[2][1] = 8;
         initBoard2[2][2] = 0;
-        
+
         Board testBoard = new Board(initBoard);
         Board ReferenceBoard = new Board(initBoard2);
-        
+
         System.out.println(testBoard.toString());
         if (testBoard.isGoal())
         {
@@ -244,16 +243,16 @@ public class Board {
         }
         else
         {
-            System.out.println("Is not Goal!");          
+            System.out.println("Is not Goal!");
         }
-        
+
         if (testBoard.equals(ReferenceBoard))
         {
             System.out.println("Equal");
         }
         else
         {
-            System.out.println("Not Equal");          
+            System.out.println("Not Equal");
         }
         System.out.println("twin of reference Board: " + (ReferenceBoard.twin()).toString());
         for (Board neighborBoard : testBoard.neighbors())
