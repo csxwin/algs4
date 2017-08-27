@@ -1,6 +1,6 @@
 import java.util.Iterator;
 import edu.princeton.cs.algs4.StdRandom;
-
+import edu.princeton.cs.algs4.In;
 public class Board {
     private int[][] initBlocks; //initial blocks
     private int[][] neighborBlock1;  //neigbor blocks
@@ -77,7 +77,7 @@ public class Board {
             neighborBlock1[blankX][blankY] = temp;
             neighborBoard[numOfNeighbor++] = new Board(neighborBlock1);
         }
-        if (blankX < 2)
+        if (blankX < this.dimension - 1)
         {
             int temp = neighborBlock2[blankX + 1][blankY];
             neighborBlock2[blankX + 1][blankY] = neighborBlock2[blankX][blankY];
@@ -91,7 +91,7 @@ public class Board {
             neighborBlock3[blankX][blankY] = temp;
             neighborBoard[numOfNeighbor++] = new Board(neighborBlock3);
         }
-        if (blankY < 2)
+        if (blankY < this.dimension - 1)
         {
             int temp = neighborBlock4[blankX][blankY + 1];
             neighborBlock4[blankX][blankY + 1] = neighborBlock4[blankX][blankY];
@@ -118,7 +118,7 @@ public class Board {
         {
             for (int j = 0; j < dimension; j++)
             {
-                if (!(i == 2 & j == 2))
+                if (!(i == (this.dimension - 1) & j == (this.dimension - 1)))
                 {
                     if (initBlocks[i][j] != i * dimension + j + 1)
                     {
@@ -136,18 +136,18 @@ public class Board {
         int swapX2;
         int swapY2;
         do {
-            swapX1 = StdRandom.uniform(3);
-            swapY1 = StdRandom.uniform(3);
+            swapX1 = StdRandom.uniform(this.dimension);
+            swapY1 = StdRandom.uniform(this.dimension);
         } while (swapX1 == blankX && swapY1 == blankY);
         do {
-            swapX2 = StdRandom.uniform(3);
-            swapY2 = StdRandom.uniform(3);
+            swapX2 = StdRandom.uniform(this.dimension);
+            swapY2 = StdRandom.uniform(this.dimension);
         } while (swapX2 == blankX && swapY2 == blankY);
 
         int[][] twinBlock = new int[dimension][dimension];
-        for (int i = 0; i < dimension; i++)
+        for (int i = 0; i < this.dimension; i++)
         {
-            for (int j = 0; j < dimension; j++)
+            for (int j = 0; j < this.dimension; j++)
             {
                 twinBlock[i][j] = initBlocks[i][j];
             }
@@ -210,56 +210,72 @@ public class Board {
 
     public static void main(String[] args) // unit tests (not graded)
     {
-        int[][] initBoard = new int[3][3];
-        int[][] initBoard2 = new int[3][3];
-
-        initBoard[0][0] = 5;
-        initBoard[0][1] = 1;
-        initBoard[0][2] = 7;
-        initBoard[1][0] = 6;
-        initBoard[1][1] = 8;
-        initBoard[1][2] = 0;
-        initBoard[2][0] = 3;
-        initBoard[2][1] = 2;
-        initBoard[2][2] = 4;
-
-        initBoard2[0][0] = 1;
-        initBoard2[0][1] = 2;
-        initBoard2[0][2] = 3;
-        initBoard2[1][0] = 4;
-        initBoard2[1][1] = 5;
-        initBoard2[1][2] = 6;
-        initBoard2[2][0] = 7;
-        initBoard2[2][1] = 8;
-        initBoard2[2][2] = 0;
-
-        Board testBoard = new Board(initBoard);
-        Board ReferenceBoard = new Board(initBoard2);
-
-        System.out.println(testBoard.toString());
-        if (testBoard.isGoal())
+//        int[][] initBoard = new int[2][2];
+//        int[][] initBoard2 = new int[3][3];
+//        //
+//        initBoard[0][0] = 1;
+//        initBoard[0][1] = 2;
+//        // initBoard[0][2] = 7;
+//        initBoard[1][0] = 3;
+//        initBoard[1][1] = 0;
+//        // initBoard[1][2] = 0;
+//        // initBoard[2][0] = 3;
+//        // initBoard[2][1] = 2;
+//        // initBoard[2][2] = 4;
+//        //
+//        initBoard2[0][0] = 1;
+//        initBoard2[0][1] = 2;
+//        initBoard2[0][2] = 3;
+//        initBoard2[1][0] = 4;
+//        initBoard2[1][1] = 5;
+//        initBoard2[1][2] = 6;
+//        initBoard2[2][0] = 7;
+//        initBoard2[2][1] = 8;
+//        initBoard2[2][2] = 0;
+//
+//        Board testBoard = new Board(initBoard);
+//        Board ReferenceBoard = new Board(initBoard2);
+//
+//        System.out.println(testBoard.toString());
+//        if (testBoard.isGoal())
+//        {
+//            System.out.println("Is Goal!");
+//        }
+//        else
+//        {
+//            System.out.println("Is not Goal!");
+//        }
+//
+//        if (testBoard.equals(ReferenceBoard))
+//        {
+//            System.out.println("Equal");
+//        }
+//        else
+//        {
+//            System.out.println("Not Equal");
+//        }
+//        System.out.println("twin of reference Board: " + (ReferenceBoard.twin()).toString());
+//        for (Board neighborBoard : testBoard.neighbors())
+//        {
+//            System.out.println(neighborBoard.toString());
+//        }
+//        System.out.printf("\n hamming: %d", testBoard.hamming());
+//        System.out.printf("\n manhattan: %d", testBoard.manhattan());
+        
+        
+        
+              // create initial board from file
+      In in = new In(args[0]);
+      int n = in.readInt();
+      int[][] blocks = new int[n][n];
+      for (int i = 0; i < n; i++)
+          for (int j = 0; j < n; j++)
+              blocks[i][j] = in.readInt();
+      Board initial = new Board(blocks);
+      
+              if (initial.isGoal())
         {
             System.out.println("Is Goal!");
         }
-        else
-        {
-            System.out.println("Is not Goal!");
-        }
-
-        if (testBoard.equals(ReferenceBoard))
-        {
-            System.out.println("Equal");
-        }
-        else
-        {
-            System.out.println("Not Equal");
-        }
-        System.out.println("twin of reference Board: " + (ReferenceBoard.twin()).toString());
-        for (Board neighborBoard : testBoard.neighbors())
-        {
-            System.out.println(neighborBoard.toString());
-        }
-        System.out.printf("\n hamming: %d", testBoard.hamming());
-        System.out.printf("\n manhattan: %d", testBoard.manhattan());
     }
 }

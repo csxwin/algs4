@@ -24,22 +24,23 @@ public class Solver {
 
       //  StdOut.println("start");
 
-        // StdOut.println(initial.toString());
-        // StdOut.println(initial.twin().toString());
+//        StdOut.println(initial.toString());
+//        StdOut.println(initial.twin().toString());
+        // StdOut.printf("priority: %d moves: %d manhattan: %d\n", initNode.Priority, initNode.Moves, initNode.SearchBoard.manhattan());
 
         SearchNode currentNode;// = pQueue.delMin();
         SearchNode currentNodeTwin;// = pQueueTwin.delMin();
 
-//        int bugGuard = 200000;
+//       int bugGuard = 10;
         boolean isGoal = false;
         boolean isGoalTwin = false;
 
         do {
-//            StdOut.println("PQ is as following: ");
-//            for (SearchNode sn : pQueue)
-//            {
-//                StdOut.printf("priority: %d moves: %d manhattan: %d\n", sn.Priority, sn.Moves, sn.SearchBoard.manhattan());
-//            }
+          //  StdOut.println("PQ is as following: ");
+          //  for (SearchNode sn : pQueue)
+          //  {
+          //      StdOut.printf("priority: %d moves: %d manhattan: %d\n", sn.Priority, sn.Moves, sn.SearchBoard.manhattan());
+          //  }
 
             currentNode = pQueue.delMin();
             currentNodeTwin = pQueueTwin.delMin();
@@ -93,7 +94,8 @@ public class Solver {
 //                    StdOut.printf("priority = %d\n", childrenNode.Priority);
 //                    StdOut.printf("moves = %d\n", childrenNode.Moves);
 //                    StdOut.printf("manhattan = %d\n", childrenNode.SearchBoard.manhattan());
-//                    StdOut.println(childrenNode.SearchBoard.toString());
+//                   StdOut.println(childrenNode.SearchBoard.toString());
+//                   StdOut.println("preivous board is: " + childrenNode.PreviousNode.SearchBoard.toString());
                 }
             }
         } while (!isGoal && !isGoalTwin); // && (bugGuard-- > 0));
