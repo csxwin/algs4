@@ -261,9 +261,9 @@ public class Board {
 //        }
 //        System.out.printf("\n hamming: %d", testBoard.hamming());
 //        System.out.printf("\n manhattan: %d", testBoard.manhattan());
-        
-        
-        
+
+
+
               // create initial board from file
       In in = new In(args[0]);
       int n = in.readInt();
@@ -272,7 +272,7 @@ public class Board {
           for (int j = 0; j < n; j++)
               blocks[i][j] = in.readInt();
       Board initial = new Board(blocks);
-      
+
               if (initial.isGoal())
         {
             System.out.println("Is Goal!");
