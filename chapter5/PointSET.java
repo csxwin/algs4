@@ -1,3 +1,4 @@
+import java.util.*;
 import edu.princeton.cs.algs4.SET;
 import edu.princeton.cs.algs4.Point2D;
 import edu.princeton.cs.algs4.RectHV;
@@ -6,7 +7,7 @@ import java.util.Iterator;
 public class PointSET {
    private int numOfPoints = 0;
    private SET<Point2D> pointSET;
-   private Point2D[] pArray; 
+   private Point2D[] pArray;
    private int numOfPointsInside = 0;
    public         PointSET()                               // construct an empty set of points
    {
@@ -22,23 +23,34 @@ public class PointSET {
    }
    public              void insert(Point2D p)              // add the point to the set (if it is not already in the set)
    {
+      if (p == null)
+      {
+         throw new java.lang.IllegalArgumentException("");
+      }
       numOfPoints++;
       pointSET.add(p);
    }
    public           boolean contains(Point2D p)            // does the set contain point p?
    {
+      if (p == null)
+      {
+         throw new java.lang.IllegalArgumentException("");
+      }
       return pointSET.contains(p);
    }
-   public              void draw()                         // draw all points to standard draw
+   public              void draw()                         // draw all points to standard draw !!!!!!!!!!!
    {
       for (Point2D p : pointSET)
       {
-                     System.out.printf("%s", p.toString());
          p.draw();
       }
    }
    public Iterable<Point2D> range(RectHV rect)             // all points that are inside the rectangle (or on the boundary)
    {
+      if (rect == null)
+      {
+         throw new java.lang.IllegalArgumentException("");
+      }
       pArray = new Point2D[size()];
       for (Point2D p : pointSET)
       {
@@ -70,6 +82,10 @@ public class PointSET {
    }
    public           Point2D nearest(Point2D p)             // a nearest neighbor in the set to point p; null if the set is empty
    {
+      if (p == null)
+      {
+         throw new java.lang.IllegalArgumentException("");
+      }
       Point2D nearestP = new Point2D(0, 0);
       boolean init = false;
       for (Point2D localP : pointSET)
