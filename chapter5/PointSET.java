@@ -54,7 +54,9 @@ public class PointSET {
       {
          throw new java.lang.IllegalArgumentException("");
       }
+      // init index
       pArray = new Point2D[size()];
+      numOfPointsInside = 0;
       for (Point2D p : pointSET)
       {
          if (rect.contains(p))

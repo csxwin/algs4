@@ -203,22 +203,12 @@ public class KdTree {
          {
             rangeHelper(node.left);
          }
-         else
-         {
-            // target rect doesn't intersects with left subtree
-            return;
-         }
       }
       if (node.right != null)
       {
          if (node.right.rect.intersects(this.targetRect))
          {
             rangeHelper(node.right);
-         }
-         else
-         {
-            // target rect doesn't intersects with right subtree
-            return;
          }
       }
    }
@@ -228,7 +218,9 @@ public class KdTree {
       {
          throw new java.lang.IllegalArgumentException("");
       }
+      // init array and index
       pArray = new Point2D[size()];
+      numOfPointsInside = 0;
       // find all points
       this.targetRect = rect;
       rangeHelper(root);
@@ -319,10 +311,13 @@ public class KdTree {
           System.out.printf("contain point %s\n", containsTestPoint.toString());
       }
 
-      RectHV R = new RectHV(0.1, 0, 0.9, 1);
+      RectHV R = new RectHV(0.6, 0, 0.9, 1);
+      StdDraw.setPenRadius(.02);
+      StdDraw.setPenColor(StdDraw.BLUE);
       for (Point2D p : kdTree.range(R))
       {
-        System.out.printf("Here is : %s\n", p.toString());
+          p.draw();
+//        System.out.printf("Here is : %s\n", p.toString());
       }
 
        Point2D F = new Point2D(0.81, 0.30);
