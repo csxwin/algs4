@@ -1,4 +1,5 @@
-import java.util.*;
+import edu.princeton.cs.algs4.In;
+import edu.princeton.cs.algs4.StdDraw;
 import edu.princeton.cs.algs4.SET;
 import edu.princeton.cs.algs4.Point2D;
 import edu.princeton.cs.algs4.RectHV;
@@ -42,7 +43,9 @@ public class PointSET {
    {
       for (Point2D p : pointSET)
       {
-         p.draw();
+         StdDraw.setPenColor(StdDraw.BLACK);
+         StdDraw.setPenRadius(0.01);
+         StdDraw.point(p.x(), p.y());
       }
    }
    public Iterable<Point2D> range(RectHV rect)             // all points that are inside the rectangle (or on the boundary)
@@ -105,25 +108,42 @@ public class PointSET {
    }
    public static void main(String[] args)                  // unit testing of the methods (optional)
    {
-      Point2D A = new Point2D(0, 0);
-      Point2D B = new Point2D(2, 2);
-      Point2D C = new Point2D(3, 2);
-      Point2D D = new Point2D(4, 2);
-      Point2D E = new Point2D(2, 3);
+      // Point2D A = new Point2D(0, 0);
+      // Point2D B = new Point2D(2, 2);
+      // Point2D C = new Point2D(3, 2);
+      // Point2D D = new Point2D(4, 2);
+      // Point2D E = new Point2D(2, 3);
       PointSET ps = new PointSET();
-      ps.insert(A);
-      ps.insert(B);
-      ps.insert(C);
-      ps.insert(D);
-      ps.insert(E);
-      ps.draw();
-      RectHV R = new RectHV(1, 1, 4, 4);
-      for (Point2D p : ps.range(R))
+      String filename = "/kdtree-testing/kdtree/circle10.txt";
+      In in = new In(filename);
+      while(!in.isEmpty())
       {
-        System.out.printf("Here is : %s", p.toString());
+         double x = in.readDouble();
+         double y = in.readDouble();
+         Point2D p = new Point2D(x, y);
+         ps.insert(p);
+      }
+      // ps.insert(A);
+      // ps.insert(B);
+      // ps.insert(C);
+      // ps.insert(D);
+      // ps.insert(E);
+      System.out.printf("size of tree is : %d\n", ps.size());
+      ps.draw();
+
+      Point2D containsTestPoint = new Point2D(0.793893, 0.095492);
+      if (ps.contains(containsTestPoint))
+      {
+          System.out.printf("contain point %s\n", containsTestPoint.toString());
       }
 
-      Point2D F = new Point2D(-1, -1);
-      System.out.printf("nearest Point to (5, 5) is : %s", ps.nearest(F).toString());
+      RectHV R = new RectHV(0.1, 0, 0.9, 1);
+      for (Point2D p : ps.range(R))
+      {
+        System.out.printf("Here is : %s\n", p.toString());
+      }
+
+      Point2D F = new Point2D(0.81, 0.30);
+      System.out.printf("nearest Point to (0.81, 0.30) is : %s", ps.nearest(F).toString());
    }
 }

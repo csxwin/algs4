@@ -1,14 +1,17 @@
-import java.util.*;
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdDraw;
-import edu.princeton.cs.algs4.SET;
 import edu.princeton.cs.algs4.Point2D;
 import edu.princeton.cs.algs4.RectHV;
 import java.util.Iterator;
 
 public class KdTree {
    private int numOfPoints = 0;
+   private Point2D[] pArray;
    private int numOfPointsInside = 0;
+   private int nearestDistance = 0;
+   private Point2D thePoint;
+   private Point2D theNearestPoint;
+   private RectHV targetRect;
    private static class Node
    {
       public Point2D point;
@@ -16,12 +19,6 @@ public class KdTree {
       public Node left;
       public Node right;
       public boolean IsVertical;
-      public Node()
-      {
-         point = new Point2D(0, 0);
-         left = null;
-         right = null;
-      }
       public Node(Point2D pointVal)
       {
          point = pointVal;
@@ -43,7 +40,7 @@ public class KdTree {
                {
                    this.right.rect = new RectHV(this.point.x(), this.rect.ymin(),
                                                  this.rect.xmax(), this.rect.ymax());
-               }  
+               }
                else
                {
                   this.right.rect = new RectHV(this.rect.xmin(), this.point.y(),
@@ -130,12 +127,10 @@ public class KdTree {
          }
          if (this.left != null)
          {
-            System.out.printf("%s\n", this.left.point.toString());
             this.left.draw();
          }
          if (this.right != null)
          {
-            System.out.printf("%s\n", this.right.point.toString());
             this.right.draw();
          }
       }
@@ -192,12 +187,52 @@ public class KdTree {
    {
       root.draw();
    }
+   public void rangeHelper(Node node)
+   {
+      if (node == null)
+      {
+         throw new java.lang.IllegalArgumentException("");
+      }
+      if (this.targetRect.contains(node.point))
+      {
+         pArray[numOfPointsInside++] = node.point;
+      }
+      if (node.left != null)
+      {
+         if (node.left.rect.intersects(this.targetRect))
+         {
+            rangeHelper(node.left);
+         }
+         else
+         {
+            // target rect doesn't intersects with left subtree
+            return;
+         }
+      }
+      if (node.right != null)
+      {
+         if (node.right.rect.intersects(this.targetRect))
+         {
+            rangeHelper(node.right);
+         }
+         else
+         {
+            // target rect doesn't intersects with right subtree
+            return;
+         }
+      }
+   }
    public Iterable<Point2D> range(RectHV rect)             // all points that are inside the rectangle (or on the boundary)
    {
       if (rect == null)
       {
          throw new java.lang.IllegalArgumentException("");
       }
+      pArray = new Point2D[size()];
+      // find all points
+      this.targetRect = rect;
+      rangeHelper(root);
+
       return new Iterable<Point2D>()
       {
          @Override
@@ -208,16 +243,48 @@ public class KdTree {
                 private int i = numOfPointsInside;
                 public boolean hasNext()
                 {
-                   return false;
+                   return i > 0;
                 }
                 public void remove() {}
                 public Point2D next()
                 {
-                   return null;
+                   return pArray[--i];
                 }
              };
          }
       };
+   }
+   private void nearestHelper(Node node)
+   {
+      if (node == null)
+      {
+         return;
+      }
+      if (!node.rect.contains(this.thePoint))
+      {
+          if (node.point.distanceTo(this.thePoint) >= nearestDistance
+                  && node.rect.distanceTo(this.thePoint) >= nearestDistance)
+          {
+              // we should abondan search on this node and its subtrees
+              return;
+          }
+      }
+      else
+      {
+         if (node.point.distanceTo(this.thePoint) < nearestDistance)
+         {
+            // so far it is the new champion
+            this.theNearestPoint = node.point;
+         }
+         if (node.left != null)
+         {
+            nearestHelper(node.left);
+         }
+         if (node.right != null)
+         {
+            nearestHelper(node.right);
+         }
+      }
    }
    public           Point2D nearest(Point2D p)             // a nearest neighbor in the set to point p; null if the set is empty
    {
@@ -225,8 +292,11 @@ public class KdTree {
       {
          throw new java.lang.IllegalArgumentException("");
       }
-      Point2D nearestP = new Point2D(0, 0);
-      return nearestP;
+      // init
+      this.thePoint = p;
+      nearestDistance = 2;
+      nearestHelper(this.root);
+      return this.theNearestPoint;
    }
    public static void main(String[] args)                  // unit testing of the methods (optional)
    {
@@ -240,21 +310,22 @@ public class KdTree {
          Point2D p = new Point2D(x, y);
          kdTree.insert(p);
       }
-      System.out.printf("size of tree is : %d", kdTree.size());
+      System.out.printf("size of tree is : %d\n", kdTree.size());
       kdTree.draw();
 
-      // if (kdTree.contains(D))
-      // {
-      //     System.out.println("contain D");
-      // }
+      Point2D containsTestPoint = new Point2D(0.793893, 0.095492);
+      if (kdTree.contains(containsTestPoint))
+      {
+          System.out.printf("contain point %s\n", containsTestPoint.toString());
+      }
 
-      // RectHV R = new RectHV(1, 1, 4, 4);
-      // for (Point2D p : kdTree.range(R))
-      // {
-      //   System.out.printf("Here is : %s", p.toString());
-      // }
-      //
-      // Point2D F = new Point2D(-1, -1);
-      // System.out.printf("nearest Point to (5, 5) is : %s", kdTree.nearest(F).toString());
+      RectHV R = new RectHV(0.1, 0, 0.9, 1);
+      for (Point2D p : kdTree.range(R))
+      {
+        System.out.printf("Here is : %s\n", p.toString());
+      }
+
+       Point2D F = new Point2D(0.81, 0.30);
+       System.out.printf("nearest Point to (0.81, 0.30) is : %s", kdTree.nearest(F).toString());
    }
 }
