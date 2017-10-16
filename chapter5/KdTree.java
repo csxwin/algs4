@@ -78,12 +78,12 @@ public class KdTree {
       }
       public boolean contains(Point2D targetPoint)
       {
-         if (this.point == targetPoint)
+         if (this.point.x() == targetPoint.x() && this.point.y() == targetPoint.y())
          {
             return true;
          }
-         else if (this.IsVertical && (targetPoint.x() >= this.point.x())
-         || !this.IsVertical && (targetPoint.y() >= this.point.y()))
+         else if ((this.IsVertical && (targetPoint.x() >= this.point.x()))
+         || (!this.IsVertical && (targetPoint.y() >= this.point.y())))
          {
             if (this.right != null)
             {
@@ -191,7 +191,7 @@ public class KdTree {
    {
       root.draw();
    }
-   public void rangeHelper(Node node)
+   private void rangeHelper(Node node)
    {
       if (node == null)
       {
