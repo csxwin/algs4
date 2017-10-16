@@ -28,6 +28,10 @@ public class PointSET {
       {
          throw new java.lang.IllegalArgumentException("");
       }
+      if (this.contains(p))
+      {
+         return;
+      }
       numOfPoints++;
       pointSET.add(p);
    }

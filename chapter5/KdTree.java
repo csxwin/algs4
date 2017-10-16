@@ -8,7 +8,7 @@ public class KdTree {
    private int numOfPoints = 0;
    private Point2D[] pArray;
    private int numOfPointsInside = 0;
-   private int nearestDistance = 0;
+   private double nearestDistance = 0;
    private Point2D thePoint;
    private Point2D theNearestPoint;
    private RectHV targetRect;
@@ -154,6 +154,10 @@ public class KdTree {
       {
          throw new java.lang.IllegalArgumentException("");
       }
+      if (this.contains(p))
+      {
+         return;
+      }
       numOfPoints++;
       // if KdTree is empty, insert
       if (root == null)
@@ -252,30 +256,27 @@ public class KdTree {
       {
          return;
       }
-      if (!node.rect.contains(this.thePoint))
+      if (node.point.distanceTo(this.thePoint) < nearestDistance)
       {
-          if (node.point.distanceTo(this.thePoint) >= nearestDistance
-                  && node.rect.distanceTo(this.thePoint) >= nearestDistance)
+         // so far it is the new champion
+         this.theNearestPoint = node.point;
+         nearestDistance = node.point.distanceTo(this.thePoint);
+      }
+      if (node.left != null)
+      {
+          if (node.left.rect.contains(this.thePoint) ||
+              node.left.rect.distanceTo(this.thePoint) < nearestDistance)
           {
-              // we should abondan search on this node and its subtrees
-              return;
+              nearestHelper(node.left);
           }
       }
-      else
+      if (node.right != null)
       {
-         if (node.point.distanceTo(this.thePoint) < nearestDistance)
-         {
-            // so far it is the new champion
-            this.theNearestPoint = node.point;
-         }
-         if (node.left != null)
-         {
-            nearestHelper(node.left);
-         }
-         if (node.right != null)
-         {
-            nearestHelper(node.right);
-         }
+          if (node.right.rect.contains(this.thePoint) ||
+              node.right.rect.distanceTo(this.thePoint) < nearestDistance)
+          {
+              nearestHelper(node.right);
+          }
       }
    }
    public           Point2D nearest(Point2D p)             // a nearest neighbor in the set to point p; null if the set is empty
@@ -321,6 +322,10 @@ public class KdTree {
       }
 
        Point2D F = new Point2D(0.81, 0.30);
-       System.out.printf("nearest Point to (0.81, 0.30) is : %s", kdTree.nearest(F).toString());
+       StdDraw.setPenRadius(.02);
+       StdDraw.setPenColor(StdDraw.BLACK);
+       F.draw();
+       StdDraw.setPenColor(StdDraw.RED);
+       kdTree.nearest(F).draw();
    }
 }
